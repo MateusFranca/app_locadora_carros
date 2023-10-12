@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Marca;
+use App\Models\Marca; //Importar o Model "Marca" para podermos usar ele aqui.
 use Illuminate\Http\Request;
 
 class MarcaController extends Controller
@@ -34,8 +34,12 @@ class MarcaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        //Recuperamos o Model "Marca" e estamos criando um novo registo. Por causa do all() a inserção é em massa o que faz com que precisamos no Model "Marca" ele possa receber os dados dessa forma. 
+        $marca = Marca::create($request->all());
+        //O dd e para mandar a requisição e all() para isolar quando vamos ver na postman
+        //dd($request->all());
+        return $marca;
     }
 
     /**
