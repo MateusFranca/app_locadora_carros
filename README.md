@@ -45,3 +45,9 @@ php artisan make:model --migration --controller --resource nomeArquivo
 - Outra forma: php artisanmake:model --all Carro. Esse comando cria: Model, Factory, Migration, Seeder, Controller... 
 
 - Forma abreviada da anterior: php artisan make:model -a Cliente
+
+# Entendendo o conceito de endpoint (URL, URN, URI):
+
+- URL: Link do site.
+- URN: Caminhi para as páginas dentro da aplicação.
+- URI: Combinação de URL + URN, um identificador único.
