@@ -76,9 +76,17 @@ class MarcaController extends Controller
      * @param  \App\Models\Marca  $marca
      * @return \Illuminate\Http\Response
      */
+
+     //Método update serve para atualizar os dados
     public function update(Request $request, Marca $marca)
     {
-        //
+        /*
+        print_r($request->all()); // os dados atualizados
+        echo "<hr>";
+        print_r($marca->getAttributes()); // os dados antigos
+        */
+        $marca->update($request->all());
+        return $marca; 
     }
 
     /**
@@ -89,6 +97,8 @@ class MarcaController extends Controller
      */
     public function destroy(Marca $marca)
     {
-        //
+        //print_r($marca->getAttributes());
+        $marca->delete();
+        return ['msg' => 'A marca foi removido com sucesso!'];
     }
 }
