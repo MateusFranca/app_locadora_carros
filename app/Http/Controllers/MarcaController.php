@@ -56,6 +56,9 @@ class MarcaController extends Controller
     public function show($id)
     {
         $marca = $this->marca->find($id);
+        if($marca === null) {
+            return ['erro' => 'Recurso pesquisado não existe']; // O laravel converte esse array associativo para json.
+        }
         return $marca;
     }
 
@@ -81,6 +84,10 @@ class MarcaController extends Controller
     public function update(Request $request, $id)
     {
         $marca = $this->marca->find($id);
+        
+        if($marca === null) {
+            return ['erro' => 'Não pode ser atualizado. O recurso não existe'];
+        }
         $marca->update($request->all());
         return $marca; 
     }
@@ -94,6 +101,11 @@ class MarcaController extends Controller
     public function destroy($id)
     {
         $marca = $this->marca->find($id);
+        
+        if($marca === null) {
+            return ['erro' => 'Não pode realiza a exclusão. O recurso não existe'];
+        }
+
         $marca->delete();
         return ['msg' => 'A marca foi removido com sucesso!'];
     }

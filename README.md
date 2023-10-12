@@ -51,3 +51,9 @@ php artisan make:model --migration --controller --resource nomeArquivo
 - URL: Link do site.
 - URN: Caminhi para as páginas dentro da aplicação.
 - URI: Combinação de URL + URN, um identificador único.
+
+# GET E POST
+
+- O método GET é seguro e idempotente (mostra sempre o mesmo resultado). Não é bom para fazer modificações.
+
+- O método POST é apropriado para a submissão de dados que podem modificar o estado do sevirdo. É omumente usado para ações como criar, atualizar ou excluir recursos.
