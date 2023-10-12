@@ -12,9 +12,12 @@ class MarcaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    // Retorna todos os registros da Marca
     public function index()
     {
-        //
+        $marcas = Marca::all();
+        return $marcas;
     }
 
     /**
@@ -48,9 +51,11 @@ class MarcaController extends Controller
      * @param  \App\Models\Marca  $marca
      * @return \Illuminate\Http\Response
      */
+    
+     // Retorna apena um registro da Marca, temos que passar por paramentro a identificação desse respetivo registro. 
     public function show(Marca $marca)
     {
-        //
+        return $marca;
     }
 
     /**
