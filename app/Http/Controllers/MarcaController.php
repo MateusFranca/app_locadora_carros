@@ -44,9 +44,19 @@ class MarcaController extends Controller
     {   
         //stateless: propõe que cada requisição seja única
 
-        $request->validate($this->marca->rules(),$this->marca->feedback());
+        //$request->validate($this->marca->rules(),$this->marca->feedback());
 
-        $marca = $this->marca->create($request->all());
+        //dd($request->nome);
+        //dd($request->get('nome'));
+        //dd($request->input('nome'));
+        
+        //dd($request->imagem);
+        $imagem = $request->file('imagem');
+        //$imagem->store('path', 'disco'); // Por padrão a imagem será armazenada localmente 
+        $imagem->store('imagens/icons', 'public');
+        dd('Upload de arquivos');
+        
+        //$marca = $this->marca->create($request->all());
         return response()->json($marca, 201);
     }
 
@@ -92,7 +102,22 @@ class MarcaController extends Controller
         if($marca === null) {
             return response()->json(['erro' => 'Não pode ser atualizado. O recurso não existe'], 404);
         }
-        $request->validate($marca->rules(), $marca->feedback());
+        if($request->method() === 'PATCH'){
+
+            $regrasDinamicas = array();
+
+            // Percorrendo todas as regras definidas no Model
+
+            foreach ($marca->rules() as $input => $regra) {
+                //coletar aoenas as regras aplicaveis aos parâmetros parciais da requisição.
+                if(array_key_exists($input, $request->all())) {
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+            $request->validate($regrasDinamicas, $marca->feedback());
+        } else {
+            $request->validate($marca->rules(), $marca->feedback());
+        }
         $marca->update($request->all());
         return response()->json($marca, 200);
     }
