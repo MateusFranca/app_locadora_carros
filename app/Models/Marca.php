@@ -10,4 +10,19 @@ class Marca extends Model
     use HasFactory;
     //Definimos os atributos que podem ser preenchidos em massa.
     protected $fillable = ['nome', 'imagem'];
+
+    public function rules() {
+        return [
+            'nome' => 'required|unique:marcas|min:3',
+            'imagem' => 'required', 
+        ];
+    }
+
+    public function feedback() {
+        return [
+            'required' => 'O campo :attribute é obrigatório',
+            'nome.unique' => 'O nome da marca já exite',
+            'nome.min' => 'O nome deve ter no mínimo 3 caracteres'
+        ];
+    }
 }
