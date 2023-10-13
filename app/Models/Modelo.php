@@ -33,4 +33,9 @@ class Modelo extends Model
             'boolean' => 'O campo :attribute é obrigatório e deve ser verdadeiro (1) ou falso (0). '
         ];
     }
+
+    public function marca() {
+        //Um modelo PERTENCE a UMA marca
+        return $this->belongsTo('App\Models\Marca'); // Nessa linha de código dizemos que o Modelo pertence a marca, criando a relação entre eles. 
+    }
 }
