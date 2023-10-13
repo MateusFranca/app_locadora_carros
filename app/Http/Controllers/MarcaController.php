@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage; // INteragir com o sistema de armazenamento de arquivos
+use Illuminate\Support\Facades\Storage;
 use App\Models\Marca;
 use Illuminate\Http\Request;
 
@@ -47,21 +47,11 @@ class MarcaController extends Controller
         
         $imagem = $request->file('imagem');
         $imagem_urn = $imagem->store('imagens', 'public');
-
-
-        //dd($imagem_urn);
         
         $marca = $this->marca->create([
             'nome' => $request->nome,
             'imagem' => $imagem_urn,
         ]);
-
-        
-        /* Outra sintaxe para adicionar no BD as informações
-        $marca->nome = $request->nome;
-        $marca->imagem = $imagem_urn;
-        $marca->save();
-        */
 
         return response()->json($marca, 201);
     }
@@ -77,7 +67,7 @@ class MarcaController extends Controller
     {
         $marca = $this->marca->find($id);
         if($marca === null) {
-            return response()->json(['erro' => 'Recurso pesquisado não existe'], 404); // O laravel converte esse array associativo para json.
+            return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
         }
         return response()->json($marca, 200);
     }
@@ -112,10 +102,8 @@ class MarcaController extends Controller
 
             $regrasDinamicas = array();
 
-            // Percorrendo todas as regras definidas no Model
 
             foreach ($marca->rules() as $input => $regra) {
-                //coletar aoenas as regras aplicaveis aos parâmetros parciais da requisição.
                 if(array_key_exists($input, $request->all())) {
                     $regrasDinamicas[$input] = $regra;
                 }
@@ -125,7 +113,6 @@ class MarcaController extends Controller
             $request->validate($marca->rules(), $marca->feedback());
         }
 
-        /* remove o arquivo antigo caso um novo arquivo tenha sido enviado no request */
         if($request->file('imagem')) {
             Storage::disk('public')->delete($marca->imagem);
         }
@@ -154,8 +141,7 @@ class MarcaController extends Controller
         if($marca === null) {
             return response()->json(['erro' => 'Não pode realiza a exclusão. O recurso não existe'], 404);
         }
-        
-        /* remove o arquivo antigo caso um novo arquivo tenha sido enviado no request */
+
         Storage::disk('public')->delete($marca->imagem);
 
         $marca->delete();
