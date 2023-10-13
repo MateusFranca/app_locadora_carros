@@ -42,21 +42,22 @@ class MarcaController extends Controller
 
     public function store(Request $request)
     {   
-        //stateless: propõe que cada requisição seja única
-
-        //$request->validate($this->marca->rules(),$this->marca->feedback());
-
-        //dd($request->nome);
-        //dd($request->get('nome'));
-        //dd($request->input('nome'));
-        
-        //dd($request->imagem);
         $imagem = $request->file('imagem');
-        //$imagem->store('path', 'disco'); // Por padrão a imagem será armazenada localmente 
-        $imagem->store('imagens/icons', 'public');
-        dd('Upload de arquivos');
+        $imagem_urn = $imagem->store('imagens', 'public');
+
+        //dd($imagem_urn);
         
-        //$marca = $this->marca->create($request->all());
+        $marca = $this->marca->create([
+            'nome' => $request->nome,
+            'imagem' => $imagem_urn,
+        ]);
+        
+        /* Outra sintaxe para adicionar no BD as informações
+        $marca->nome = $request->nome;
+        $marca->imagem = $imagem_urn;
+        $marca->save();
+        */
+
         return response()->json($marca, 201);
     }
 
