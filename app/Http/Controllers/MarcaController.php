@@ -51,6 +51,7 @@ class MarcaController extends Controller
             'nome' => $request->nome,
             'imagem' => $imagem_urn,
         ]);
+
         
         /* Outra sintaxe para adicionar no BD as informações
         $marca->nome = $request->nome;
